@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
+  const [logs, setLogs] = useState([]);
+
+  const handleMouseOver = () => {
+    const currentTime = new Date().toLocaleString();
+    setLogs([...logs,{'Time' : currentTime , 'Event' : 'In'}]);
+  };
+
+  const handleMouseOut = () => {
+    const currentTime = new Date().toLocaleString();
+    setLogs([...logs,{'Time' : currentTime , 'Event' : 'Out'}]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+        Heading 1 (onMouseOver In and Out Time will be printed in table)
+      </h1>
+      <h2>Heading 2</h2>
+      <div>Div</div>
+      <table border ="1px" cellpadding="5px">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Event Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {logs.map((log, index) => (
+            <tr key={index}>
+              <td>{log.Time}</td>
+              <td>{log.Event}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
